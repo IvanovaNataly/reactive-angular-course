@@ -1,0 +1,23 @@
+import {Injectable} from '@angular/core';
+import {HttpClient} from "@angular/common/http";
+import {Observable} from "rxjs/index";
+import {Course} from "../model/course";
+import {map} from "rxjs/internal/operators";
+
+@Injectable({
+  providedIn: 'root'
+})
+export default class CoursesService {
+
+  constructor( private httpClient: HttpClient ) {
+
+  }
+
+  loadAllCourses(): Observable<Course[]> {
+    return this.httpClient.get<Course[]>('/api/courses')
+      .pipe(
+        map(resp => resp['payload'])
+      );
+  }
+
+}
